@@ -1,0 +1,38 @@
+function amigoSecreto() {
+    const participantes = [];
+    let nome;
+
+    // Adiciona os participantes
+    while (true) {
+        nome = prompt("Digite o nome do participante (ou 'sair' para finalizar):");
+        if (nome.toLowerCase() === 'sair') break;
+        participantes.push(nome);
+    }
+
+    // Verifica se há participantes suficientes
+    if (participantes.length < 2) {
+        console.log("É necessário pelo menos 2 participantes para o sorteio.");
+        return;
+    }
+
+    const sorteio = [...participantes];
+    let resultados = {};
+
+    // Realiza o sorteio garantindo que ninguém tire a si mesmo
+    participantes.forEach(participante => {
+        let escolhido;
+ do {
+            escolhido = sorteio.splice(Math.floor(Math.random() * sorteio.length), 1)[0];
+        } while (escolhido === participante);
+
+        resultados[participante] = escolhido;
+    });
+
+    // Exibe os resultados
+    console.log("Resultado do amigo secreto:");
+    for (let [amigo, secreto] of Object.entries(resultados)) {
+        console.log(`${amigo} tirou ${secreto}`);
+    }
+}
+
+amigoSecreto();
